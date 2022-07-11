@@ -43,7 +43,10 @@ app.use(morgan('common'));
 //Serving static documentation file located in public folder
 app.use('/', express.static('public'));
 
-
+//Default text response on '/'
+app.get('/', (req, res) => {
+  res.send('Welcome to MyFlix');
+});
 
 
 //GET all movies
