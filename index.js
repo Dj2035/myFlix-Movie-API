@@ -193,18 +193,25 @@ passport.authenticate('jwt', { session: false }),
 
 // Add a movie to a user's list of favorites
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }),  (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
-    $push: { FavoriteMovies: req.params.MovieID }
-  },
-  { new: true },
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-      res.json(updatedUser);
-    }
-  });
+  Users.findOne({ FavoriteMovies: req.params.MovieID })// Search to see if movie is already in list of favorites
+    .then((movie) => {
+      if (movie) {
+        return res.status(400).send('Movie already exists in your list of favorite');
+      } else {
+        Users.findOneAndUpdate({ Username: req.params.Username }, {
+          $push: { FavoriteMovies: req.params.MovieID }
+        },
+        { new: true },
+        (err, updatedUser) => {
+          if (err) {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+          } else {
+            res.json(updatedUser);
+          }
+        });
+      }
+    });
 });
 
 // Remove a movie from a user's list of favorites
