@@ -45,12 +45,11 @@ app.get('/', (req, res) => {
 
 
 /**CRUD */
-// GETs all movies
 /**
  * GET: returns a list of ALL movies to the user
  * Request body: Bearer Token
  * @returns array of movie objects
- * @requires passport
+ * @ requires passport
  */
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
@@ -182,7 +181,6 @@ app.post('/users',
       });
   });
 
-// Get a user by username
 /**
  * GET: Returns data on a single user (user object) by username
  * Request body: Bearer token
@@ -201,7 +199,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
     });
 });
 
-// Update a user's info, by username
+
 /**
  * PUT: Allow users to update their user info (find by username)
  * Request body: Bearer token, updated user info
@@ -273,7 +271,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
   );
 });
 
-// Remove a movie from a user's list of favorites by username
+
 /**
  * DELETE: Allows users to remove a movie from their list of favorites
  * Request body: Bearer token
