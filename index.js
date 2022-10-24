@@ -46,10 +46,10 @@ app.get('/', (req, res) => {
 
 /**CRUD */
 /**
- * GET: returns a list of ALL movies to the user
- * Request body: Bearer Token
+ * GET: Returns a list of ALL movies to the user
+ * Request body: Bearer token
  * @returns array of movie objects
- * @ requires passport
+ * @requires passport
  */
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
@@ -120,8 +120,12 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', { sessio
     });
 });
 
-//Get all users
-//Endpoint only for development purposes
+/** 
+ * GET: Returns a list of ALL users
+ * Request body: Bearer token
+ * @returns array of user objects
+ * @requires passport
+ */
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
     .then((users) => {
@@ -133,7 +137,6 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
     });
 });
 
-// Add a new user
 /**
  * POST: Allow new users to register, Username password & Email are required fields!
  * Request body: Bearer token, JSON with user information
@@ -244,7 +247,6 @@ app.put('/users/:Username',
       });
   });
 
-// Add a movie to a user's list of favorites
 /**
  * POST: Allows users to add a movie to their list of favorities
  * Request body: Bearer token
